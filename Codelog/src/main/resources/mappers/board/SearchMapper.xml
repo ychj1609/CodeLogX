@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.codelog.board.mapper.ISearchMapper">
+	
+	<resultMap type="com.spring.codelog.board.model.BoardVO" id="searchMap">
+		<id property="boardId" column="board_id" />
+		<result property="userId" column="user_id" />
+		<result property="title" column="title" />
+		<result property="writer" column="writer" />
+		<result property="tags" column="tags" />
+		<result property="content" column="content" />
+		<result property="imgPath" column="img_path" />
+		<result property="hit" column="hit" />
+		<result property="likes" column="likes" />
+		<result property="regDate" column="reg_date" />
+		<result property="preview" column="preview" />
+		<result property="thumbnail" column="thumbnail" />
+		<result property="viewAll" column="view_all" />
+		<result property="userNo" column="user_no" />
+		<result property="recnt" column="recnt" />
+	</resultMap>
+	
+	
+	 <resultMap type="com.spring.codelog.user.model.UserVO" id="searchIdMap">
+      <result property="userId" column="user_id" />
+      <result property="userNo" column="user_no" />
+      <result property="nickname" column="nickname" />
+      <result property="userPw" column="user_pw" />
+      <result property="userInfo" column="user_info" />
+      <result property="userImg" column="user_img" />
+      <result property="email1" column="email1" />
+      <result property="email2" column="email2" />
+   </resultMap>
+   
+   
+   
+	
+	<select id="search" resultMap="searchMap">
+		SELECT * FROM proj_board
+		WHERE title like '%'||#{keyword}||'%'
+		OR tags like '%'||#{keyword}||'%'
+		OR content like '%'||#{keyword}||'%'
+		OR preview like '%'||#{keyword}||'%'
+		ORDER BY board_id DESC
+	</select>
+	
+	<select id="searchMypage" resultMap="searchMap">
+		SELECT * FROM proj_board
+		WHERE title like '%'||#{keyword}||'%'
+		OR tags like '%'||#{keyword}||'%'
+		OR content like '%'||#{keyword}||'%'
+		OR preview like '%'||#{keyword}||'%'
+		AND user_id = #{userId}
+		ORDER BY board_id DESC
+	</select>
+	
+	<select id="searchByTag" resultMap="searchMap">
+		SELECT * FROM proj_board
+		WHERE tags like '%'||#{keyword}||'%'
+		ORDER BY board_id DESC
+	</select>
+	
+	<select id="searchId" resultMap="searchIdMap">
+		SELECT * FROM proj_user
+		WHERE user_id like #{userId}||'%'
+		ORDER BY user_id DESC
+	</select>
+	
+</mapper>

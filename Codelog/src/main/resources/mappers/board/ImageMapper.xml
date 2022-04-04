@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.codelog.board.mapper.BoardMapper">
+<resultMap type="com.spring.codelog.board.model.UploadVO" id="ImageMap">
+<id property="imgId" column="img_id"/>
+<result property="boardId" column="board_id"/>
+<result property="imgPath" column="img_path"/>
+</resultMap>
+<insert id="image"> INSERT INTO image(img_id,board_id, img_path) 
+VALUES(image_seq.NEXTVAL, '1',#{imgPath} )</insert>
+
+</mapper>

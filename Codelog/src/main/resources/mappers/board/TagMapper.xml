@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.codelog.board.mapper.ITagMapper">
+
+	<resultMap type="com.spring.codelog.board.commons.TagVO" id="tagMap">
+		<id property="tagNo" column="tag_no"/>
+		<result property="userId" column="user_id"/>
+		<result property="boardId" column="board_id"/>
+		<result property="tagName" column="tag_name"/>
+	</resultMap>
+	
+	<insert id="registTags">
+		INSERT INTO tags (tag_no,user_id,board_id,tag_name) values (tag_seq.NEXTVAL, #{userId}, #{boardId}, #{tagName})
+	</insert>
+	
+	<select id="listbybId" resultType="String">
+		SELECT tag_name FROM tags where board_id = #{boardId}
+	</select>
+	
+	<select id="listbyuId" resultType="String">
+		SELECT tag_name FROM tags where user_id =#{userId} ORDER BY tag_name
+	</select>
+	
+	<delete id="deleteTags">
+		DELETE tags WHERE board_id =#{boardId}
+	</delete>
+	
+	<select id="countTags" resultType="map">
+	   SELECT tag_name, count(*) AS cnt
+	   FROM tags
+	   WHERE user_id = #{userId}
+	   GROUP BY tag_name
+	   ORDER BY cnt DESC
+	</select>
+</mapper>

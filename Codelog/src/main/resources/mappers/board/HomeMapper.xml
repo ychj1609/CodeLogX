@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.codelog.board.mapper.IHomeMapper">
+<resultMap type="com.spring.codelog.board.model.BoardVO" id="boardMap">
+<id property="boardId" column="board_id"/>
+   <result property="userId" column="user_id" />
+   <result property="writer" column="writer" />
+   <result property="tags" column="tags" />
+   <result property="content" column="content" />
+   <result property="preview" column="preview" />
+   <result property="thumbnail" column="thumbnail" />
+   <result property="viewAll" column="view_all" />
+   <result property="imgPath" column="img_path" />
+   <result property="regDate" column="reg_date" />
+      <result property="recnt" column="recnt" />
+   
+   <result property="bno" column="bno" />
+   <result property="hit" column="hit" />
+</resultMap>
+
+
+<select id="RPosters" resultMap="boardMap">
+    SELECT board_id,user_id,title,writer,preview,likes,thumbnail,recnt,reg_date FROM(
+ SELECT ROWNUM as rn, a.* FROM(
+    SELECT * FROM proj_board ORDER BY  board_id DESC)a) 
+    <![CDATA[ WHERE rn<=18]]>
+</select>
+
+
+<select id="RAPosters" resultMap="boardMap">
+    SELECT board_id,user_id,title,writer,preview,likes,thumbnail,recnt, reg_date FROM(
+ SELECT ROWNUM as rn, a.* FROM(
+    SELECT * FROM proj_board WHERE      <![CDATA[
+    board_id<#{boardId} 
+         ]]>
+    ORDER BY  board_id DESC)a) 
+     <![CDATA[
+     WHERE rn<=6 AND rn>=1
+     ]]>
+</select>
+<!-- <select id="SelectOne" resultMap="boardMap">
+			
+		SELECT * FROM(
+		SELECT ROWNUM AS rn , a.* FROM(
+		SELECT * FROM proj_board ORDER BY board_id DESC)a)t		
+		<![CDATA[
+		WHERE rn=#{i}
+		]]>
+</select>
+
+<select id="SelectOneT" resultMap="boardMap">
+			
+		SELECT * FROM(
+		SELECT ROWNUM AS rn , a.* FROM(
+		SELECT * FROM proj_board ORDER BY likes DESC)a)t		
+		<![CDATA[
+		WHERE rn=#{i}
+		]]>
+</select>
+ -->
+
+<select id="TPosters" resultMap="boardMap">
+     SELECT board_id,user_id,title,writer,preview,likes,thumbnail,reg_date,recnt FROM(
+ SELECT ROWNUM as rn, a.* FROM(
+    SELECT * FROM proj_board 
+    <![CDATA[
+    WHERE TO_CHAR(reg_date)>#{start} AND TO_CHAR(reg_date)<=#{end} AND likes IS NOT NULL]]>
+     ORDER BY  likes DESC)a) 
+    <![CDATA[
+    WHERE rn<=18]]>
+    
+</select>
+
+<select id="TAPosters" resultMap="boardMap">
+        SELECT board_id,user_id,title,writer,preview,likes,thumbnail,recnt, reg_date FROM(
+ SELECT ROWNUM as rn, a.* FROM(
+    SELECT * FROM proj_board WHERE      <![CDATA[
+    likes<#{likes} AND TO_CHAR(reg_date)>#{start} AND TO_CHAR(reg_date)<=#{end} AND likes IS NOT NULL
+         ]]>
+    ORDER BY  likes DESC)a) 
+     <![CDATA[
+     WHERE rn<=6 AND rn>=1
+     ]]>
+    
+</select> 
+
+<select id="FPosters" resultMap="boardMap">
+    SELECT board_id,user_id,title,writer,preview,likes,thumbnail,recnt, reg_date FROM(
+     SELECT ROWNUM as rn, t.* FROM(
+    SELECT a.* FROM proj_board a JOIN (SELECT * FROM follow WHERE active_user = #{userNo})b
+    ON a.user_no = b.passive_user ORDER BY  board_id DESC)t)
+   <![CDATA[ 
+ WHERE rn<=18
+     ]]>
+</select>
+
+<select id="FAPosters" resultMap="boardMap">
+      SELECT board_id,user_id,title,writer,preview,likes,thumbnail,recnt, reg_date FROM(
+     SELECT ROWNUM as rn, t.* FROM(
+    SELECT a.* FROM proj_board a JOIN (SELECT * FROM follow WHERE active_user = #{userNo})b
+
+    ON a.user_no = b.passive_user 
+    <![CDATA[WHERE a.board_id<#{boardId}]]>
+     ORDER BY  board_id DESC)t)
+     <![CDATA[
+ WHERE rn<=6 AND rn>=1]]>
+     
+</select>
+
+ 
+
+<select id="PCount">
+	SELECT COUNT(*) FROM proj_board;
+</select>
+
+</mapper>

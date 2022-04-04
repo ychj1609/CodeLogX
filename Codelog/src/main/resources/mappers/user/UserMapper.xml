@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.codelog.user.mapper.IUserMapper">
+
+   <resultMap type="com.spring.codelog.user.model.UserVO" id="UserMap">
+      <result property="userId" column="user_id" />
+      <result property="userNo" column="user_no" />
+      <result property="nickname" column="nickname" />
+      <result property="userPw" column="user_pw" />
+      <result property="userInfo" column="user_info" />
+      <result property="userImg" column="user_img" />
+      <result property="email1" column="email1" />
+      <result property="email2" column="email2" />
+      <collection property="boardList" resultMap="list"/>
+   </resultMap>
+   
+   <resultMap type="com.spring.codelog.board.model.BoardVO" id="list">
+   		<id property="boardId" column="board_id"/>
+   		<result property="title" column="title"/>
+   		<result property="preview" column="preview"/>
+   		<result property="thumbnail" column="thumbnail"/>
+   		<result property="likes" column="likes"/>
+   		<result property="regDate" column="reg_date"/>
+   </resultMap>
+   
+    <select id="checkId" resultType="int">
+    	SELECT COUNT(*)
+    	FROM proj_user
+    	WHERE user_id = #{userId}
+    </select>
+   
+	<insert id="join">
+		INSERT INTO proj_user(user_no, user_id, user_pw, nickname, email1, email2)
+		VALUES(user_no_seq.NEXTVAL, #{userId}, #{userPw}, #{nickname}, #{email1}, #{email2})
+	</insert>
+	
+	<select id="selectOne" resultMap="UserMap">
+		SELECT * FROM proj_user
+		WHERE user_id = #{userId}
+	</select>
+	
+	<update id="updateProfileImg">
+		UPDATE proj_user
+		SET user_img = #{fileName}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="nickChange">
+		UPDATE proj_user
+		SET nickname = #{nickname}, user_info = #{userInfo}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="updateUser">
+		UPDATE proj_user
+		SET user_pw = #{userPw}, email1 = #{email1}, email2 = #{email2}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM proj_user
+		WHERE user_id = #{userId}
+	</delete>
+	
+	<select id="getInfo" resultMap="UserMap">
+		SELECT u.user_id,
+		nickname,
+		user_pw,
+		user_info,
+		user_img,
+		b.board_id,
+		b.writer,
+		b.title,
+		b.preview,
+		b.likes,
+		b.reg_date,
+		b.thumbnail
+		FROM proj_user u
+		LEFT OUTER JOIN proj_board b
+		ON u.user_id = b.user_id
+		WHERE u.user_id = #{userId}
+		ORDER BY b.board_id DESC
+	</select>
+	
+	<select id="getUserImg" resultType="String">
+		SELECT user_img FROM proj_user WHERE user_id=#{userId}
+	</select>
+	
+	
+
+</mapper>

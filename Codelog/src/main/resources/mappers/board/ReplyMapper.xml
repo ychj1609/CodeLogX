@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.spring.codelog.board.mapper.IReplyMapper">
+ <resultMap type="com.spring.codelog.board.model.ReplyVO" id="ReplyMap">
+ <id property="no" column="no" />
+   <result property="bno" column="bno" />
+   <result property="grp" column="grp" />
+   <result property="grps" column="grps" />
+   <result property="grpl" column="grpl" />
+   <result property="userNo" column="user_no" />
+   <result property="userImg" column="user_img" />
+   <result property="userId" column="user_id" />
+   
+   <result property="writer" column="writer" />
+   <result property="content" column="content" />
+   <result property="wdate" column="wdate" />
+ </resultMap>
+
+<!-- 댓글 쓰기 -->
+<insert id="replyWrite">
+    insert into p_reply
+    values(reply_seq.NEXTVAL, #{bno}, reply_seq.CURRVAL, 0, 0, #{writer}, #{content}, sysdate, #{userNo})
+</insert>
+
+<!-- 답글 쓰기 -->
+<insert id="rereplyWrite">
+    insert into p_reply
+    values(reply_seq.NEXTVAL, #{bno}, #{grp}, #{grps}, 1, #{writer}, #{content}, sysdate,#{userNo})
+</insert>
+
+<!-- p_board에 댓글수 증가 -->
+<update id="replyUp">
+    update proj_board set recnt=recnt+1 
+    where board_id=#{bno}
+    <!-- 보드 조인 추가 -->
+</update>
+
+<!-- 댓글 리스트 가져오기 -->
+<select id="replyList" resultMap="ReplyMap">
+     select r.no, r.bno, r.grp, r.grpl, r.writer, r.content, r.wdate, u.user_id
+    from p_reply r join proj_user u
+    on r.user_no = u.user_no
+    where r.bno = #{bno}
+    order by grp ASC, grpl ASC, grps ASC
+</select>
+
+
+<!-- grps 가져오기 -->
+<select id="getGrps" resultType="int">
+        SELECT count(*) FROM p_reply WHERE grp = #{grp}
+
+</select>
+
+<!-- recnt 가져오기 -->
+<select id="getRecnt" resultType="int">
+        SELECT recnt FROM proj_board WHERE board_id = #{bno}
+
+</select>
+
+
+
+<!-- 모댓글 삭제 - 답글 있음 -->
+<update id="replyNotDelete">
+    update p_reply set content='삭제된 댓글입니다.'
+    where no=#{no}
+</update>
+
+
+<!-- 댓글 수정 -->
+<update id="ModifyReply">
+    update p_reply set content=#{content}
+    where no=#{no}
+</update>
+
+<!-- p_board에 댓글수 감소 -->
+<update id="replyDown">
+    update proj_board set recnt=recnt-1
+    where board_id=#{bno}
+</update>
+
+</mapper>

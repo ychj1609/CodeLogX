@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.codelog.user.mapper.IFollowMapper">
+
+	<resultMap type="com.spring.codelog.user.commons.FollowVO" id="FollowMap">
+		<id property="id" column="id"/>
+		<result property="activeUser" column="active_user"/>
+		<result property="passiveUser" column="passive_user"/>
+		<result property="regDate" column="reg_date"/>
+		<result property="activeUserId" column="active_user_id"/>
+		<result property="passiveUserId" column="passive_user_id"/>
+		<result property="userImg" column="user_img"/>
+	</resultMap>
+
+	<insert id="follow">
+		INSERT INTO follow(id, active_user, passive_user, reg_date)
+		VALUES(follow_seq.NEXTVAL, #{activeUser}, #{passiveUser}, to_date(sysdate, 'yyyy.mm.dd hh24:mi:ss'))
+	</insert>
+
+	<delete id="unfollow">
+		DELETE FROM follow WHERE active_user=#{activeUser} and passive_user=#{passiveUser}
+	</delete>
+	
+	<select id="isFollow" resultType="int">
+		SELECT count(*) FROM follow WHERE active_user=#{activeUser} and passive_user=#{passiveUser}
+	</select>
+	
+	<!-- 팔로우 리스트 조회 -->
+	<select id="selectActiveUserList" resultMap="FollowMap">
+		SELECT
+			active_user,
+			passive_user,
+			F.reg_date,
+			U.user_id as passive_user_id,
+			U.user_img as user_img
+		FROM follow F
+		LEFT OUTER JOIN proj_user U
+		on (F.passive_user = U.user_no)
+		WHERE active_user =#{activeUser}
+		ORDER BY reg_date DESC
+
+	</select>
+	
+	<!-- 팔로워 리스트 조회 -->
+	<select id="selectPassiveUserList" resultMap="FollowMap">
+		SELECT
+			active_user,
+			passive_user,
+			F.reg_date,
+			U.user_id as active_user_id,
+			U.user_img as user_img
+		FROM follow F
+		LEFT OUTER JOIN proj_user U
+		on (F.active_user = U.user_no)
+		WHERE passive_user =#{passiveUser}
+		ORDER BY reg_date DESC
+
+	</select>
+	
+	<delete id="deleteUserAllFollow">
+		delete from follow where active_user=#{active_user} or passive_user=#{active_user}
+	</delete>
+	
+</mapper>

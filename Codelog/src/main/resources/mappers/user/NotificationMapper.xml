@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.codelog.util.websocket.mapper.INotificationMapper">
+
+	<resultMap type="com.spring.codelog.util.websocket.model.NotificationVO" id="NotificationMap">
+		<id property="notiNo" column="noti_no" />
+		<result property="receiver" column="receiver" />	
+		<result property="msg" column="msg" />	
+		<result property="sender" column="sender" />	
+		<result property="regDate" column="reg_date" />	
+		<result property="category" column="category" />	
+		<result property="bno" column="bno" />	
+	</resultMap>
+	
+	<insert id="saveNotification">
+		INSERT INTO notification(noti_no, receiver, msg, sender, reg_date, category, bno)
+		VALUES(notify_seq.NEXTVAL, #{receiver}, #{msg}, #{sender}, to_date(sysdate, 'yyyy.mm.dd hh24:mi:ss'), #{category}, #{bno})
+	</insert>
+	
+	<select id="alarm" resultMap="NotificationMap">
+		SELECT * FROM notification
+		WHERE receiver = #{receiver}
+		ORDER BY noti_no DESC
+	</select>
+
+	<select id="countAlarm" resultType="int">
+		SELECT COUNT(msg)
+		FROM notification
+		WHERE receiver = #{receiver}
+	</select>
+	
+	<delete id="deleteNotification">
+		DELETE FROM notification
+		WHERE noti_no = #{notiNo}
+	</delete>
+
+</mapper>

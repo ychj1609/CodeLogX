@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="userAuthHandler" class="com.spring.codelog.util.interceptor.UserAuthHandler" />
+
+	<mvc:interceptors>
+	
+		<!-- 로그인 권한을 체크하는 핸들러 -->
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/user/editUser" />
+	 		<mvc:mapping path="/user/mypage" />
+	 		<mvc:mapping path="/user/nickChange" />
+	 		<mvc:mapping path="/user/updateUser" />
+	 		<mvc:mapping path="/user/delete" />
+	 		<mvc:mapping path="/user/editUser/imgUpload" />
+	 		<mvc:mapping path="/user/editUser/imgDel" />
+	 		<mvc:mapping path="/boardController/getWrite" />
+	 		<mvc:mapping path="/boardController/thumbnail" />
+	 		<mvc:mapping path="/boardController/modify" />
+	 		<mvc:mapping path="/boardController/update" />
+	 		<mvc:mapping path="/boardController/delete" />
+	 		<mvc:mapping path="/reply/replyWrite" />
+	 		<mvc:mapping path="/reply/rereplyWrite" />
+	 		<mvc:mapping path="/reply/deleteReply" />
+	 		<mvc:mapping path="/reply/replyModify" />
+	 		<mvc:mapping path="/reply/deleteReReply" />
+	 		<ref bean="userAuthHandler" />
+	 	</mvc:interceptor>
+	
+	</mvc:interceptors>
+	
+</beans>

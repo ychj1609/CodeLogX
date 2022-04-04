@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+@import url('http://fonts.cdnfonts.com/css/billabong');
+
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ONE-Mobile-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*버튼 색상을 위함(로그인 모달)-------------------------*/
+.btn-primary{
+	background-color:rgb(148, 180, 159) !important;
+	border-color:rgb(148, 180, 159) !important;
+}
+
+.btn-outline-primary{
+	color:rgb(148, 180, 159) !important;
+	border-color:rgb(148, 180, 159) !important;
+}
+
+.btn-outline-primary:hover{
+	background-color:rgb(148, 180, 159) !important;
+	color:white !important;
+}
+
+element.style {
+    border-color: rgb(148, 180, 159) !important;
+}
+
+.form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: rgb(148, 180, 159) !important;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(148, 180, 159 / 25%) !important;
+}
+
+/*---------------------------------------------------*/
+/* 다크모드 css 시작 */
+body {
+  --text-color: #222;
+  --bkg-color: #F8F9FA;
+  --ckg-color: white;
+  --skg-color: #E9ECEF;
+}
+
+body.dark-theme {
+  --text-color: #eee;
+  --bkg-color: #121212;
+  --ckg-color:  #212121;
+    --skg-color: #121212;
+  
+}
+
+body {
+  background: var(--bkg-color);
+}
+
+span, i, div, a {
+  color: var(--text-color);
+}
+
+.fw-bold, .form-label {
+	color: #212121 !important;
+} 
+
+body {
+  background: var(--bkg-color);
+}
+
+h1, p {
+  color: var(--text-color);
+}
+
+.pop:hover{
+	color:rgb(148 180 159);
+	font-weight: bold;
+	font-size:103%;	
+}
+
+.card-footer {
+   background-color: var(--ckg-color) !important;
+}
+
+.card {
+   background: var(--ckg-color) !important;
+   box-shadow: 2px 1px 1px  var(--skg-color);
+   border-color: var(--ckg-color) !important;
+}
+/* 포스트 테두리
+.card {
+   border-color: var(--bkg-color) !important;
+}
+*/
+
+#tot {
+   background-color: var(--text-color) !important;
+}
+
+.fa-heart {
+   color: red !important;
+}
+/* 다크모드 css 끝 */
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 헤더 프로필 이미지 */
+#small-profile-img {
+   width: 50px;
+   height: 50px;
+   border-radius: 70px;
+}
+
+button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.logo {
+    font-size: 2.2rem;
+    margin: 0;
+    font-weight: bold;
+    font-family: 'Billabong', sans-serif;
+}
+
+.b {
+    border: 3px solid black;
+}
+
+.ic {
+    font-size: 1.3rem;
+}
+
+.c {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.c:hover {
+       background-color: transparent;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.c:focus {
+       background-color: transparent;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.card-footer1 {
+    padding: .5rem 1rem;
+    background-color: rgba(255, 255, 255);
+    border-top: 1px solid rgba(255, 255, 255);
+}
+
+.cc:hover {
+    background-color: rgb(248, 239, 239);
+}
+
+.midd {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hc:hover {
+
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.hc:focus {
+
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.hc:hover>i {
+    color: rgb(148, 180, 159);
+}
+
+.bc {
+    font-size: 0.8rem;
+    float: right;
+    border-color: rgba(128, 128, 128, 0.137);
+    margin-right: 1rem;
+}
+
+.bc:hover {
+    background-color: rgba(0, 0, 0, 0.849);
+    color: white;
+}
+
+
+
+/* 회원가입/로그인 모달 input type=password 글씨 안나오는 것 따로 지정 */
+input[type="password"] {
+  font: small-caption;
+}

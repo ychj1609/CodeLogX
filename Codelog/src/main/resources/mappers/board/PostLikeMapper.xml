@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.codelog.board.mapper.IPostLikeMapper">
+
+	<resultMap type="com.spring.codelog.board.commons.PostLikeVO" id="likeMap">
+		<id property="id" column="id" />
+		<result property="boardId" column="board_id" />
+		<result property="viewUserId" column="user_id" />
+		<result property="likeDate" column="like_date" />
+		<result property="postLike" column="p_like" />
+	</resultMap>
+	
+	<select id="likeCount" resultType="int" parameterType="com.spring.codelog.board.commons.PostLikeVO">
+		SELECT COUNT(p_like)
+		FROM post_like
+		WHERE user_id = #{viewUserId} AND board_id = #{boardId}
+	</select>
+	
+	<insert id="likeInsert" parameterType="com.spring.codelog.board.commons.PostLikeVO">
+		INSERT INTO post_like (id, user_id, board_id, like_date)
+		VALUES (like_seq.NEXTVAL, #{viewUserId}, #{boardId}, to_date(sysdate, 'yyyy.mm.dd hh24:mi:ss'))
+	</insert>
+	
+	<select id="getLikeInfo" resultType="int" parameterType="com.spring.codelog.board.commons.PostLikeVO">
+		SELECT p_like
+		FROM post_like
+		WHERE user_id = #{viewUserId} AND board_id = #{boardId}
+	</select>
+	
+	<update id="likeUpdate" parameterType="com.spring.codelog.board.commons.PostLikeVO">
+		UPDATE post_like
+		SET <include refid="cal" />
+		WHERE user_id = #{viewUserId} and board_id = #{boardId}
+	</update>
+	
+	<sql id="cal">
+		<if test="postLike == 1">
+			p_like = 0
+		</if>
+		<if test="postLike == 0">
+			p_like = p_like + 1
+		</if>
+	</sql>
+
+</mapper>
