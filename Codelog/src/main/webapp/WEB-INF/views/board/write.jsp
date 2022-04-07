@@ -108,7 +108,7 @@
           const editor = new Editor({
                el: document.querySelector('#editor'),
                width: '100%',
-               height: '41.327rem',
+               height: '30.327rem',
                initialEditType: 'markdown',
                previewStyle: 'vertical',
              });
@@ -124,21 +124,22 @@
            }
          
           </script>
-         <button class="ok" id="show" type="button">
-            <i class="fa-solid fa-check"></i>
-         </button>
-         <button type="button" class="exit" onclick="history.back()">
-            <i class="fa-solid fa-right-from-bracket"></i>
-         </button>
-
+        
       
 
 
 
       </div>
 
-   
+     <div id="chkBtn" style="position: fixed; width: 100%;">
+         <button class="ok" id="show" type="button" style=" margin-right:0px">
+            <i class="fa-solid fa-check"></i>
+         </button>
+         <button type="button" class="exit" onclick="history.back()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+         </button>
 
+</div>
 
 
 
@@ -152,24 +153,19 @@
       <div id="check">
 
 
-         <div class="container-down">
+         <div class="container">
 
-            <div class="row py-md-3" style="margin: 5% 15% 0% 15%">
+            <div class="row py-md-3" style="width: 80%; margin: 0 auto; text-align: center; margin-top: 1rem;">
 
-               <div class="col-md-6 px-md-4" style="margin: 0 auto; width:70%;">
-               <p class="my-md-1" style="font-weight: bold; font-size: 1.7rem; text-align: center; position: relative; top: 65px; left: -20px; ">썸네일 미리보기</p>
-                  <div class="card" style="width: 90%; border:0; background-color: transparent;">
-
+               <p class="my-md-1" style="font-weight: bold; font-size: 1.7rem; text-align: center;">썸네일 미리보기</p>
+					
                      <!--썸네일 부분-->
-              
-                     <div class="thumbnailBox" id="thumbnailBox" style="height: 300px; width:300px; position: relative;  text-align: center; top: 127px; left: -156px;">
+                     <div class="thumbnailBox" id="thumbnailBox" style="width:90%; text-align: center; margin: 0 auto; margin-bottom: 1rem; margin-top: 2rem;">
                         <img src="<c:url value='/img/change.jpg'/>" class="btn thumbnailBox" type="button" id="img-preview" onclick="document.all.thumbnailUpload.click();"
-                           style="width: 100%; height: 100%; position: relative"> 
+                           style="width: 400px; height:300px; padding: 0;   object-fit: cover;"> 
                            <input type="file" id="thumbnailUpload" name="thumbnailUpload" accept="image/*" onchange="readURL(this)"> 
                            <input type="hidden" id="thumbnail" name="thumbnail">
                      </div>
-                  </div>
-            
             
 <script>
 
@@ -223,9 +219,6 @@
                
                   $('#thumbnail').val(result); //파일명을 BoardVO에 보낼 파라미터 값에 저장
                   console.log(result);
-                  
-           
-            
            },
            error : function(request, status, error) {
               console.log('code: ' + request + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
@@ -255,27 +248,30 @@
      </script>
 
                      <!--제목은 글작성 페이지에서 가져오기-->
-					
-                     <div class="card-body my-md-2 p-0 "
-                        style=" margin-bottom: 1rem; position: relative; bottom: 183px; left: 156px;">
+             
 		
 						
                         <!--키다운 이벤트로 글자 수 실시간 기록 50(임시) 이상시 못씀-->
-                        <div class="form-floating" style="margin-top: 1rem; text-align:center;padding-top: 13px;" >
-                           <textarea class="thumbtext" placeholder="Leave a comment here" id="floatingTextarea" name="preview" style="width: 290px; height: 146px; resize: none;"></textarea>
+                        <div class="" style="width: 400px; margin: 0 auto; padding: 0" >
+                        <div>
+                           <textarea class="thumbtext" placeholder="Leave a comment here" id="floatingTextarea" name="preview" style="resize: none; width: 100%; height: 120px;"></textarea>
+                        </div>  
+                        <div style="height: 20px;">
+                       <div style="float: right; width: 57px">
+                        
                            <span id="textL" style="">0</span>
                            <span style="">/100</span>
-                           
-                        </div>
-
-                     <div class="row" style="margin-top: 1rem">
-                        <div class="form-check form-switch open" style="margin: 0% 0% 0% 75%; margin-top: 0.5rem; margin-bottom:1rem;" >
+                          
+                           </div>
+                       </div>
+                       
+                         <div class="form-check form-switch open" style="width:120px; height:30px; text-align: left; margin-left:290px; margin-top: 0.5rem; margin-bottom:1rem; display: inline-block;" >
                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked> 
-                           <label class="form-check-label" for="flexSwitchCheckDefault">전체 공개</label> 
+                           <div style="margin-top: 0.2rem;"><span style="" class="form-check-label" for="flexSwitchCheckDefault">전체 공개</span></div>
                            <input type="hidden" id="viewAll" name="viewAll" value="1">
                            <br>
                         </div>
-                        <div class="btn-group my-md-0" role="group" aria-label="Basic radio toggle button group" style="height: 2.7rem;">
+                        <div class="btn-group my-md-0" role="group" aria-label="Basic radio toggle button group" style="width:400px; height: 2.7rem; margin: 0 auto;">
                            <input type="radio" class="btn-check" name="btnradio2" id="btnradio3" autocomplete="off">
                            <button type="button" class="btn btn-outline-primary hide" for="btnradio3" style="font-size: 1.3rem; width: 2rem; border: 0; color:rgb(148 180 159); border-color:rgb(148 180 159);">
                               취소
@@ -286,17 +282,19 @@
                               작성
                            </button>
                         </div>
+                        
+                           
+                        </div>
+
+                      
                      </div>
                      </div>
                      
-                  </div>
                </div>
          
 
-            </div>
 
 
-         </div>
 
 
    </form>
@@ -368,6 +366,8 @@
               $('#test2').val(content);
             $("#check").show();
             $("#articles").hide();
+            $("#chkBtn").hide();
+
             $("#check").toggleClass('fadeIn');
             $("#articles").toggleClass();
 			
