@@ -38,9 +38,7 @@ public class ImgController {
 	//프로필 이미지 파일 보여주기 요청
 	@GetMapping("/{userId}")
 	public ResponseEntity<byte[]> getUserImgFile(@PathVariable("userId") String userId) {
-		System.out.println("프로필이미지 "+userId);
 		String fileName = service.getUserImg(userId);
-		System.out.println("fileName: " + fileName);
 		
 		File file;
 		
@@ -49,7 +47,6 @@ public class ImgController {
 			
 		} else {
 			file = new File("C:\\test\\upload\\" + fileName);
-			System.out.println(file);
 			
 		}
 		
@@ -75,7 +72,6 @@ public class ImgController {
 	@GetMapping("/display/{thumbnail}")
 	public ResponseEntity<byte[]> getFile(@PathVariable("thumbnail") String thumbnail, HttpSession session) {
 		String fileName = thumbnail;
-		System.out.println("fileName: " + fileName);
 
 		
 		
@@ -86,14 +82,12 @@ public class ImgController {
 			
 		} else {
 			file = new File("C:\\test\\thumbnail\\" + fileName);
-			System.out.println(file);
 			
 		}		
 		
 		
 
 		ResponseEntity<byte[]> result = null;
-		System.out.println(result);
 
 		try {
 			HttpHeaders headers = new HttpHeaders();

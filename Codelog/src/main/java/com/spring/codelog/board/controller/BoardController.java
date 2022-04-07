@@ -3,6 +3,7 @@ package com.spring.codelog.board.controller;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -148,7 +149,14 @@ public class BoardController {
     // @RequestParam : get/post방식으로 전달된 변수 1개
     // HttpSession 세션객체
     @RequestMapping(value="/board", method=RequestMethod.GET)
-    public ModelAndView home(@RequestParam int boardId, HttpSession session) {
+    public ModelAndView home(@RequestParam int boardId, HttpSession session, HttpServletRequest request) {
+    	
+    	   Enumeration<String> attributes = request.getSession().getAttributeNames();
+    	   while (attributes.hasMoreElements()) {
+    	       String attribute = (String) attributes.nextElement();
+    	       System.err.println(attribute+" : "+request.getSession().getAttribute(attribute));
+    	   }
+    	   
         // 조회수 증가 처리
        if(session.getAttribute("loginSession") != null)
         service.increaseHit(boardId, session);
@@ -216,6 +224,13 @@ public class BoardController {
         mav.addObject("dto", vo);
         mav.addObject("searchList", list);
         mav.addObject("postLike", like);
+        
+        Enumeration<String> attributes2 = request.getSession().getAttributeNames();
+ 	   while (attributes2.hasMoreElements()) {
+ 	       String attribute2 = (String) attributes2.nextElement();
+ 	       System.err.println(attribute2+" : "+request.getSession().getAttribute(attribute2));
+ 	   }
+ 	   
         return mav;
     }
    

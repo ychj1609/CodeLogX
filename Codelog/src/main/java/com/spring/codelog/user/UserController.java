@@ -336,10 +336,8 @@ public class UserController {
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getFile(HttpSession session) {
 		String fileName = ((UserVO)session.getAttribute("loginSession")).getUserImg();
-		System.out.println("fileName: " + fileName);
 
 		File file = new File("C:\\test\\upload\\" + fileName);
-		System.out.println(file);
 
 		ResponseEntity<byte[]> result = null;
 

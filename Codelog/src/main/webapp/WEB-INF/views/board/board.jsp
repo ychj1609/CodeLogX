@@ -972,7 +972,7 @@
       });
    
       function like_update() {
-         let post_like = ${postLike}; //좋아요 여부 확인 1, 0
+         let post_like = $('#like-check').val(); //좋아요 여부 확인 1, 0
          const view_user_id = $('#view-user').val(); //글 보는 사람 아이디
          const view_user_nick = '${loginSession.nickname}';
          const writer = '${dto.userId}'; //글 쓴 사람
@@ -987,6 +987,9 @@
             "postLike" : post_like   //1 = 좋아요, 0 = 좋아요 취소   
          };
          
+         let total = Number($('#result').html());
+		console.log("현재 좋아요 개수는? "+total);
+         
          $.ajax({
             type : 'PUT',
             url : '<c:url value="/likeUpdate" />',
@@ -998,10 +1001,12 @@
                   console.log('좋아요 취소');
                   $('#like-check').val(0);
                   $('#like-btn').css("color", "black");
-                  let total = $('#result').html();
-                  $('#result').html(${dto.likes} - 1);      
+          		
+                  console.log("-1되야되는데 total 뭔데?? "+total);
+                  total = total-1;
+                  console.log("-됬니? "+total);
+                  $('#result').html(total);      
                   post_like = 0;
-                  location.reload();
                   
                   
                   
@@ -1009,10 +1014,14 @@
                   console.log('좋아요');
                   $('#like-check').val(1);
                   $('#like-btn').css("color", "red");
-                  $('#result').html(${dto.likes} + 1);
+          		console.log("+1되야되는데 total 뭔데?? "+total);
+
+                  total = total+1;
+            		console.log("+됬니? "+total);
+
+                  $('#result').html(total);      
                   post_like = 1;
                   socket.send(msg);
-                  location.reload();
                   
                }
                

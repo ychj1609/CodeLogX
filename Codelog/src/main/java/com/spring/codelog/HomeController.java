@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,6 +47,11 @@ public class HomeController {
 	   
 	   System.out.println("---------------------------GET:/ HOME:RECENT-------------------------");
 	 
+	   Enumeration<String> attributes = request.getSession().getAttributeNames();
+	   while (attributes.hasMoreElements()) {
+	       String attribute = (String) attributes.nextElement();
+	       System.err.println(attribute+" : "+request.getSession().getAttribute(attribute));
+	   }
 	   
 	      model.addAttribute("recent", true);
 	      model.addAttribute("trending", false);

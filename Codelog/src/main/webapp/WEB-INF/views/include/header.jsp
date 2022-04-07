@@ -286,6 +286,7 @@ $('#searchInput').keydown(function(){
             listHtml += "			<img class='reply_list_profileImage' style='margin-top:0.20rem; border-radius: 70%; overflow: hidden;' width='40rem' src='<c:url value='/image/"+userId+"'/>'/><span style='font-color: rgb(148, 180, 159);'>&nbsp;&nbsp;&nbsp;"+userId+"</span>";
             listHtml += "		</a> ";
             listHtml += "	</div>";
+            
             $("#toast-area").append(listHtml);
 			             }
 			        	} else {
@@ -302,6 +303,10 @@ $('#searchInput').keydown(function(){
 
 	// toast생성 및 추가
 	function onMessage(evt){
+		if($("#toast-area").children().length>=3){
+    	$("#toast-area").children().first().remove();
+		}
+		
 	    var data = evt.data;
 	   	console.log(data);
 	 	// toast
