@@ -87,12 +87,26 @@ html,body
 }
 /* 태그 input */
 .tag{
-    margin-left: 3rem;
     text-align: left;
     font-size: 23px;
     outline: none;
     border: none;
     height: 81px;
+}
+
+.tagIconsList{
+	
+	background-color: #f8f9fa;
+	color: #B4CFB0;
+	font-size:19px;
+	margin: 0 0.5rem 0 0;
+	padding: 0.5rem 1rem 0.5rem 1rem;
+	border-radius: 10px;
+	
+}
+
+.tagIconsList:hover{
+cursor: pointer;
 }
 
 /* 마크다운 버튼 div */

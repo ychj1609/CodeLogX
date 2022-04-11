@@ -117,7 +117,10 @@ public class BoardController {
       System.out.println("글 작성 요청");
       int boardId = service.write(vo);
       //태그등록 
+      
       String tags = vo.getTags();
+      System.out.println(tags);
+      if(tags != null) {
       String userId = vo.getUserId();
       String str = tags.replace(" ", "");
 	  String st = str.replace("\"", "");
@@ -126,7 +129,7 @@ public class BoardController {
 	  for(int i = 0; i<eachTag.length; i++) {
 			tagService.registTags(eachTag[i], userId,boardId);
 		}
-      
+      }
       ra.addFlashAttribute("msg", "글 작성 완료");
       return "redirect:/boardController/board?boardId=" + boardId;
    }
@@ -256,7 +259,10 @@ public class BoardController {
        System.out.println(vo);
         service.update(vo);
         //태그수정
+        
         String tags = vo.getTags();
+        System.out.println(tags);
+        if(tags != null) {
         String str = tags.replace(" ", "");
       String st = str.replace("\"", "");
       System.out.println("정제한 문자열"+st);
@@ -266,7 +272,7 @@ public class BoardController {
       for(int i = 0; i<eachTag.length; i++) {
          tagService.registTags(eachTag[i], vo.getUserId(), vo.getBoardId());
       }
-
+        }
       return "redirect:/boardController/board?boardId=" + vo.getBoardId();
    }
 

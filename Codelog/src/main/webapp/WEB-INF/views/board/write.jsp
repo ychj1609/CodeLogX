@@ -88,11 +88,11 @@
          <!--태그-->
          <div class="hashtag">
             <div class="form-group">
-               <input type="hidden" value="" name="tag" id="rdTag" />
+               <input type="hidden" value="" name="tags" id="rdTag" />
             </div>
             <ul id="tag-list"></ul>
-            <div class="form-group">
-               <input type="text" id="tag" size="7" class="tag" name="tags" placeholder="태그는 쉼표(,)로 구분합니다." style="width: 500px;">
+            <div class="form-group2" style="margin-left: 3rem;">
+               <input type="text" id="tag" size="7" class="tag" name="tag" placeholder="태그 입력 후 엔터를 눌러주세요" style="width: 500px;">
             </div>
          </div>
          <!-- 글 작성 화면(화면 왼 쪽 절반 div)  -->
@@ -131,7 +131,8 @@
 
       </div>
 
-     <div id="chkBtn" style="position: fixed; width: 100%;">
+     <div id="chkBtn" style="position: fixed; position : absolute;
+bottom : 0; width: 100%;">
          <button class="ok" id="show" type="button" style=" margin-right:0px">
             <i class="fa-solid fa-check"></i>
          </button>
@@ -254,7 +255,7 @@
                         <!--키다운 이벤트로 글자 수 실시간 기록 50(임시) 이상시 못씀-->
                         <div class="" style="width: 400px; margin: 0 auto; padding: 0" >
                         <div>
-                           <textarea class="thumbtext" placeholder="Leave a comment here" id="floatingTextarea" name="preview" style="resize: none; width: 100%; height: 120px;"></textarea>
+                           <textarea class="thumbtext" placeholder="Leave a comment here" id="floatingTextarea" name="preview" style="resize: none; width: 100%; height: 120px; font-size: 1.3rem;"></textarea>
                         </div>  
                         <div style="height: 20px;">
                        <div style="float: right; width: 57px">
@@ -272,12 +273,10 @@
                            <br>
                         </div>
                         <div class="btn-group my-md-0" role="group" aria-label="Basic radio toggle button group" style="width:400px; height: 2.7rem; margin: 0 auto;">
-                           <input type="radio" class="btn-check" name="btnradio2" id="btnradio3" autocomplete="off">
                            <button type="button" class="btn btn-outline-primary hide" for="btnradio3" style="font-size: 1.3rem; width: 2rem; border: 0; color:rgb(148 180 159); border-color:rgb(148 180 159);">
                               취소
                            </button>
                            &nbsp;&nbsp;&nbsp; 
-                           <input type="radio" class="btn-check" name="btnradio2" id="btnradio4" autocomplete="off">
                            <button class="btn btn-outline-primary show px-md-0" for="btnradio4" style="font-size: 1.3rem; width: 2rem; background-color: rgb(148 180 159); border-color:rgb(148 180 159); color: white;">
                               작성
                            </button>
@@ -320,37 +319,106 @@
          var tag ={};
          var counter = 0;
          
-         
+         var tagChk = 0;
          //글자수 많을시 처리 
+         
+         
+         
+         
          $('#tag').keyup(function () {
+        	 
+        	  
+
+        	 
+        	  if($('#tag').val() == ","){
+             	 $('#tag').val("");
+              }
+
+        	 
               var contentL = $(this).val().length;
               console.log(contentL);
               $('#textL').text(contentL);
-              if (contentL > 30) {
-                 $(this).val($(this).val().substring(0, 30));
-                 alert("태그가 너무 많아요!");
+              if (contentL > 10) {
+                 $(this).val($(this).val().substring(0, 10));
+                 alert("태그가 너무 길어요!");
 				
               }
+
+              
+            
+              
            });
-         $('#tag').keypress(function(e){
+         
+         
+         $('#tag').keydown(function(e){
            
+        	 
             //엔터나 스페이스 누를때 실행
-            if(e.key === "Enter" || e.keyCode ==32){
-               
+            if(e.key === "Enter" || e.key === ","){
+               // alert("태그 엔터");
+	
                var tagValue = $(this).val();
                
-               if(tagValue !== ""){
-                  
+               if(tagValue !== "" &&  tagChk == 0){
+            	   var str ="";
+                   str="<div class='tagIcons' style='display:inline-block;'> <div class='tagIconsList' style='display:inline-block;'>"+tagValue+"</div></div>";
+                   $('.form-group2').prepend(str);
+                   
+                   $('#tag').val("");
+                   tagChk = 1;
+                   
+                   var nodes=$(".tagIcons").children(); 
+             	  console.log("뭐야...");
+                   console.log("자식수? "+nodes.length);
+                   var txt=""; 
+                   nodes.each(function(){ txt+=$(this).text()+","; });
+                   console.log("지금까지 태그는? "+txt);	
+             	  console.log("무시함?...");
+             	  $('#rdTag').val(txt);
+
+               }else if(tagValue !== "" && tagChk == 1){
+            	   var str ="";
+                   str="<div class='tagIconsList' style='display:inline-block;'>"+tagValue+"</div>";
+                   $('.tagIcons').append(str);
+                   $('#tag').val("");
+                   
+                   
+                   
+                   var nodes=$(".tagIcons").children(); 
+             	  console.log("뭐야...");
+                   console.log("자식수? "+nodes.length);
+                   var txt=""; 
+                   nodes.each(function(){ txt+=$(this).text()+","; });
+                   console.log("지금까지 태그는? "+txt);	
+             	  console.log("무시함?...");
+             	  $('#rdTag').val(txt);
+
+             	  
+             	  
+               }else{
+                   $('#tag').val("");
+
                }
+               
+               $(".tagIconsList").click(function(e){
+                   $(this).remove();
+               });
+             
+
             }
+            
          });
          
+       
          
          $(".hide").click(function () {
             $("#articles").show();
+            $("#chkBtn").show();
+
             $("#check").hide();
             $("#articles").toggleClass('fadeIn');
             $("#check").toggleClass();
+
 
 
 
@@ -360,7 +428,7 @@
             var checkTag = $('#tag').val();
             
              if(checkTitle == '') {alert("제목을 입력해주세요!"); return false;}
-             if(checkTag == '') {alert("태그를 입력해주세요!"); return false; }
+            // if(checkTag == '') {alert("태그를 입력해주세요!"); return false; }
              
             let content = editor.getHTML();
               $('#test2').val(content);

@@ -104,7 +104,6 @@ html,body
 }
 /* 태그 input */
 .tag{
-    margin-left: 3rem;
     text-align: left;
     font-size: 23px;
     outline: none;
